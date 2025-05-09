@@ -1,0 +1,24 @@
+-> docker images // see all existing images
+-> docker ps // lists the running containers
+-> docker pull openjdk // downloading openjdk
+-> docker images // can see openjdk after downloading
+-> docker run --name JAVA -it -d openjdk // give name JAVA
+-> docker ps
+-> docker exec -it JAVA jshell // Open java shell
+jshell -> System.out.println("Hey") 
+
+jshell -> int a = 1; b = 2; int sum = a+b;
+a ==> 1
+b ==> 2
+sum ==> 3
+
+-> /exit
+
+
+
+-------salesform-------
+
+Validations for phone
+LEN(Phone__c) <> 10
+
+Enrollment_Date__c > TODAY()
