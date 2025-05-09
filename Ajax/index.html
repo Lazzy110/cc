@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form id="registrationForm">
+        Name: <input type="text" id="name" required><br><br>
+        Email: <input type="email" id="email" required><br><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+
+            let userData = { name: name, email: email };
+
+            // Get existing users from local storage or set empty array
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Simulate AJAX POST (fake delay)
+            setTimeout(() => {
+                users.push(userData);
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('User registered successfully!');
+
+                // Redirect to list page
+                window.location.href = 'list.html';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
