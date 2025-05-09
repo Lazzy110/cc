@@ -22,3 +22,10 @@ Validations for phone
 LEN(Phone__c) <> 10
 
 Enrollment_Date__c > TODAY()
+
+
+--------AWS Apache------(Ubuntu)
+sudo apt update -y
+sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo systemctl enable apache2
