@@ -1,0 +1,58 @@
+ --------------VM1--------------------
+# Update and install SSH server
+sudo apt update
+sudo apt install openssh-server
+
+# Enable and start SSH service
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+# Check SSH status
+sudo systemctl status ssh
+
+# Find VM1 IP address
+ip a
+
+# Create a text file (example 1 - empty file)
+touch vm1_file.txt
+
+# Create a text file (example 2 - with text)
+echo "Hello from VM1!" > vm1_file.txt
+
+# Verify file was created
+ls -l
+cat vm1_file.txt
+
+# Transfer file to VM2
+scp vm1_file.txt user2@192.168.56.102:/home/user2/
+
+
+
+
+----------------VM2---------------
+# Update and install SSH server
+sudo apt update
+sudo apt install openssh-server
+
+# Enable and start SSH service
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+# Check SSH status
+sudo systemctl status ssh
+
+# Find VM2 IP address
+ip a
+
+# Create a text file (example 1 - empty file)
+touch vm2_file.txt
+
+# Create a text file (example 2 - with text)
+echo "Hello from VM2!" > vm2_file.txt
+
+# Verify file was created
+ls -l
+cat vm2_file.txt
+
+# Transfer file to VM1
+scp vm2_file.txt user1@192.168.56.101:/home/user1/
