@@ -1,0 +1,109 @@
+------------Initialize Node.js project:--------------
+mkdir node-mongo-crud
+cd node-mongo-crud
+npm init -y
+
+
+---Install dependencies:------------
+npm install express mongoose body-parser
+
+
+---------server.js (Main application file):--------
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/crud_operations', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Create a schema for the user
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String
+});
+
+// Create a model
+const User = mongoose.model('User', userSchema);
+
+// API Endpoints
+
+// CREATE: Add new user
+app.post('/users', async (req, res) => {
+  const { name, email } = req.body;
+  const user = new User({ name, email });
+  try {
+    const savedUser = await user.save();
+    res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error saving user' });
+  }
+});
+
+// READ: Get all users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users' });
+  }
+});
+
+// READ: Get a single user by ID
+app.get('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user' });
+  }
+});
+
+// UPDATE: Update a user by ID
+app.put('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  const { name, email } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { name, email }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user' });
+  }
+});
+
+// DELETE: Delete a user by ID
+app.delete('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user' });
+  }
+});
+
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+
+----run node server.js-----------
