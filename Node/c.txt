@@ -46,7 +46,7 @@ app.listen(port, () => {
 
 --node server.js---
 
-----AWS----
+-----------------AWS---------------------------------
 
 -----SSH into Your EC2 Instance-----
 Open your terminal (on your local machine).
@@ -54,8 +54,8 @@ ssh -i "your-key-name.pem" ec2-user@<Your-EC2-Public-IP>
 
 
 --aws instance terminal--
-sudo yum update -y
-sudo yum install -y nodejs npm
+sudo apt update -y
+sudo pt install -y nodejs npm
 
 
 git clone https://github.com/yourusername/repository-name.git
